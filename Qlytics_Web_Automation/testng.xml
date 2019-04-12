@@ -1,0 +1,31 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Qlytics" parallel="tests" thread-count="4"
+	data-provider-thread-count="1">
+	<test name="RegsitrationUiTest">
+		<classes>
+			<class name="qlytics.Regression.SignUpPageUiTest" />
+		</classes>
+	</test>
+	<test name="LoginUiTest">
+		<classes>
+			<class name="qlytics.Regression.LoginUiTest" />
+		</classes>
+	</test>
+	
+	<test name="LoginFunctionalityTest">
+		<classes>
+			<class name="qlytics.Regression.LoginFunctionalityTest" />
+		</classes>
+	</test>
+	<test name="SignUpFunctionalityTest">
+		<classes>
+			<class name="qlytics.Regression.SignUpFunctionalityTest" />
+		</classes>
+	</test>
+	<test name="LoginValidationTest">
+		<classes>
+			<class name="qlytics.Regression.LoginValidationTest" />
+		</classes>
+	</test>
+	
+</suite>
