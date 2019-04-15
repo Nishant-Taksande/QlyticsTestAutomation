@@ -57,7 +57,7 @@ import jxl.write.biff.RowsExceededException;
 
 public class AppLibrary {
 
-	public static final long GLOBALTIMEOUT = 40;
+	public static final long GLOBALTIMEOUT = 20;
 	private WebDriver driver; // Driver instance
 	private WebDriver mailDriver; // Default Driver instance
 	private Configuration config;
@@ -1251,13 +1251,6 @@ public class AppLibrary {
 			driver.findElement(getBy(driver, locator)).sendKeys(text);
 		}
 		
-		else if (text.equalsIgnoreCase("NA")) {
-			driver.findElement(getBy(driver, locator)).sendKeys(text);
-		}
-
-		else if (text.equalsIgnoreCase("Blank")) {
-			AppLibrary.verifyAbsent(driver,locator );
-		}
 	}
 
 	public static void clickElement(WebDriver driver, String locator) {
@@ -1733,5 +1726,13 @@ public class AppLibrary {
 			return false;
 		}
 	}
+	
+	public static void openNewTabByJavaScript(WebDriver driver) {
+
+    
+        ((JavascriptExecutor)driver).executeScript("window.open();");
+        
+	}
+	
 
 }

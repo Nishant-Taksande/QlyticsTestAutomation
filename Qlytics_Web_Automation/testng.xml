@@ -27,5 +27,13 @@
 			<class name="qlytics.Regression.LoginValidationTest" />
 		</classes>
 	</test>
+	<test name="SignUpFullValidationTest">
+		<classes>
+			<class name="qlytics.Regression.SignUpFullValidationTest" />
+		</classes>
+	</test>
+	
+	
+	
 	
 </suite>

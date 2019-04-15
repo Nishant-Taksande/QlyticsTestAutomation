@@ -50,8 +50,15 @@ public class SignUpPage {
 
 	public static String cnfPasswordValidation = "xpath://div[span[input[@id='confirmPassword']]]" + child + "";
 	public static String otherCnfPasswordValidation = "xpath://div[span[input[@id='confirmPassword']]]" + child1 + "";
+
+	public static String phoneNumberValidation = "xpath://div[span[input[@id='phoneNumber']]]" + child + "";
+	public static String otherphoneNumberValidation = "xpath://div[span[input[@id='phoneNumber']]]" + child1 + "";
+
+	public static String comapnyNameValidation = "xpath://div[span[input[@id='companyName']]]" + child + "";
+
+	public static String jobTitleValidation = "xpath://div[span[input[@id='jobTitle']]]" + child + "";
 	
-	
+	public static String otherValidation = "xpath://span[contains(text(),'Replace')]";
 
 	public SignUpPage(WebDriver driver) {
 		super();
@@ -94,6 +101,7 @@ public class SignUpPage {
 
 	public void registration(String firstName, String lastName, String email, String pass, String CnfPass,
 			String PhoneNo, String CompanyName, String jobTitle) {
+
 		AppLibrary.enterText(driver, firtsNameInput, firstName);
 		AppLibrary.enterText(driver, lastNameInput, lastName);
 		AppLibrary.enterText(driver, businessEmailInput, email);
@@ -105,4 +113,35 @@ public class SignUpPage {
 		AppLibrary.clickElement(driver, registerButton);
 	}
 
+	public void registrationForValidation(String firstName, String lastName, String email, String pass, String CnfPass,
+			String PhoneNo, String CompanyName, String jobTitle) {
+
+		if (!firstName.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, firtsNameInput, firstName);
+		}
+		if (!lastName.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, lastNameInput, lastName);
+		}
+		if (!email.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, businessEmailInput, email);
+		}
+		if (!pass.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, passwordInput, pass);
+		}
+		if (!CnfPass.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, cnfPasswordInput, CnfPass);
+		}
+		if (!PhoneNo.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, phoneNumberInput, PhoneNo);
+		}
+		if (!CompanyName.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, companyNameInput, CompanyName);
+		}
+		if (!jobTitle.equalsIgnoreCase("")) {
+			AppLibrary.enterText(driver, jobTitleInput, jobTitle);
+		}
+
+		AppLibrary.clickElement(driver, registerButton);
+
+	}
 }
