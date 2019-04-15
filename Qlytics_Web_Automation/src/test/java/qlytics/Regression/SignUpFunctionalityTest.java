@@ -53,6 +53,7 @@ public class SignUpFunctionalityTest extends TestBase {
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
+//		new MailinatorPage(driver).getVerificationOnNewTab(emailAddress);
 		new MailinatorPage(driver).getVerification(emailAddress);
 
 		new LoginPage(driver).Login(emailAddress + "@mailinator.com", Password);

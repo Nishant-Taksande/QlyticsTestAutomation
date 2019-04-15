@@ -67,7 +67,8 @@ public class LoginValidationTest extends TestBase {
 
 			if (!otherValidation.equalsIgnoreCase("")) {
 				AppLibrary.findElement(driverw, LoginPage.noActiveAcc.replace("Replace", otherValidation));
-//				AppLibrary.enterTextForValidation(driverw, locator, text);
+				
+	
 			}
 		}
 	}
