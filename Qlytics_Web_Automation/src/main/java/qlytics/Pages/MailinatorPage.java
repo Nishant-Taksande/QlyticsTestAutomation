@@ -18,6 +18,8 @@ public class MailinatorPage {
 //	WebDriver driver;
 
 	public static String verifyEmailLabel = "xpath://td[contains(text(),'[Qlytics Test] Please Confirm Your E-mail Address')]";
+	
+	public static String verifyResetLabel = "xpath://td[contains(text(),'Password reset on Qlytics Test')]";
 
 	public static String iframe = "xpath://iframe[@id='msg_body']";
 
@@ -43,7 +45,6 @@ public class MailinatorPage {
 		AppLibrary ap = new AppLibrary();
 		mailDriver = ap.launchDefaultDriverInstance();
 
-		
 		boolean flag;
 		int counter = 2;
 
@@ -54,7 +55,6 @@ public class MailinatorPage {
 				System.out.println("Counter = " + counter);
 
 				try {
-
 
 					mailDriver
 							.get("https://www.mailinator.com/v3/index.jsp?zone=public&query=" + email + "#/#inboxpane");
@@ -72,7 +72,6 @@ public class MailinatorPage {
 
 				AppLibrary.switchToWindow(mailDriver, 2);
 				AppLibrary.sleep(3000);
-
 
 				if (!AppLibrary.isElementPresent(mailDriver, "xpath://input[@placeholder='Email Address']")) {
 					mailDriver.navigate().refresh();
@@ -96,13 +95,11 @@ public class MailinatorPage {
 			throw new Exception("Failed to access verification");
 		}
 	}
-	
-	public void getVerificationOnNewTab(String email) throws Exception {
 
-//		 System.setProperty("webdriver.firefox.profile", "default");
+	public void getVerificationOnNewTab(String email) throws Exception {
 		AppLibrary ap = new AppLibrary();
 		ap.openNewTabByJavaScript(mailDriver);
-		
+
 		boolean flag;
 		int counter = 2;
 
@@ -132,7 +129,6 @@ public class MailinatorPage {
 				AppLibrary.switchToWindow(mailDriver, 3);
 				AppLibrary.sleep(3000);
 
-
 				if (!AppLibrary.isElementPresent(mailDriver, "xpath://input[@placeholder='Email Address']")) {
 					mailDriver.navigate().refresh();
 
@@ -143,7 +139,7 @@ public class MailinatorPage {
 				mailDriver.close();
 
 				AppLibrary.switchToWindow(mailDriver, 2);
-				
+
 				mailDriver.switchTo().defaultContent();
 				AppLibrary.sleep(2000);
 				AppLibrary.findElement(mailDriver, deleteMailButton).click();// delete
@@ -158,7 +154,6 @@ public class MailinatorPage {
 			throw new Exception("Failed to access verification");
 		}
 	}
-	
 
 	public String getPassword(String email) throws Exception {
 
@@ -203,6 +198,67 @@ public class MailinatorPage {
 			throw new Exception("Failed to access verification");
 		}
 		return text;
+	}
+
+	public void forgotPasswordVerification(String email) throws Exception {
+
+		AppLibrary ap = new AppLibrary();
+		ap.openNewTabByJavaScript(mailDriver);
+
+		boolean flag;
+		int counter = 2;
+
+		try {
+			do {
+				flag = false;
+				counter--;
+				System.out.println("Counter = " + counter);
+
+				try {
+					AppLibrary.switchToWindow(mailDriver, 2);
+
+					mailDriver
+							.get("https://www.mailinator.com/v3/index.jsp?zone=public&query=" + email + "#/#inboxpane");
+					AppLibrary.sleep(3000);
+
+					AppLibrary.syncAndClick(mailDriver, verifyResetLabel);
+
+				} catch (Exception e) {
+					flag = true;
+				}
+
+				AppLibrary.sleep(1000);
+				mailDriver.switchTo().frame(AppLibrary.findElement(mailDriver, iframe));
+				AppLibrary.syncAndClick(mailDriver, ClickOnLink);
+
+				AppLibrary.switchToWindow(mailDriver, 3);
+				AppLibrary.sleep(3000);
+				
+//				if (!AppLibrary.isElementPresent(mailDriver, "xpath://input[@placeholder='Email Address']")) {
+//					mailDriver.navigate().refresh();
+//
+//				}
+//
+//				AppLibrary.findElement(mailDriver, "xpath://input[@placeholder='Email Address']");
+//				AppLibrary.findElement(mailDriver, "xpath://button[@class='ant-btn ant-btn-primary ant-btn-block']");
+//				mailDriver.close();
+//
+//				AppLibrary.switchToWindow(mailDriver, 2);
+//
+//				mailDriver.switchTo().defaultContent();
+//				AppLibrary.sleep(2000);
+//				AppLibrary.findElement(mailDriver, deleteMailButton).click();// delete
+//				mailDriver.close();
+//				AppLibrary.switchToWindow(mailDriver, 1);
+			} while (flag && counter > 0);
+
+			System.out.println("Mailinator mail verified");
+
+		} catch (Exception e1) {
+			mailDriver.quit();
+			throw new Exception("Failed to access verification");
+		}
+
 	}
 
 }

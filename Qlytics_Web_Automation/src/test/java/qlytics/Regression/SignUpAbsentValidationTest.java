@@ -44,6 +44,8 @@ public class SignUpAbsentValidationTest extends TestBase {
 		AppLibrary.clickElement(driver, LoginPage.signUpLink);
 	}
 
+	
+
 	@Test(dataProvider = "Registration")
 	public void testSignUpAbsentValidation(String email, String psd, String cnfPassword, String firstName,
 			String lastName, String phoneNumber, String companyName, String jobTitle, String emailvalidation,
@@ -58,57 +60,62 @@ public class SignUpAbsentValidationTest extends TestBase {
 					companyName, jobTitle);
 
 			if (!firstNameValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.firstNameValidation.replace("Replace", firstNameValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.firstNameValidation.replace("Replace", firstNameValidation),1);
 				
 			
 			}
 
 			if (!lastNameValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.lastNamevalidation.replace("Replace", lastNameValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.lastNamevalidation.replace("Replace", lastNameValidation),1);
+				
 			}
 
 			if (!emailvalidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.businessValidation.replace("Replace", emailvalidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.businessValidation.replace("Replace", emailvalidation),1);
 			}
 
 			if (!psdvalidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.passwordValidation.replace("Replace", psdvalidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.passwordValidation.replace("Replace", psdvalidation),1);
 			}
 
 			if (!passOtherValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver,
-						SignUpPage.otherPasswordvalidation.replace("Replace", passOtherValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver,
+						SignUpPage.otherPasswordvalidation.replace("Replace", passOtherValidation),1);
 			}
 			if (!cnfPassValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.cnfPasswordValidation.replace("Replace", cnfPassValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.cnfPasswordValidation.replace("Replace", cnfPassValidation),1);
 			}
 			if (!cnfPassOtherValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver,
-						SignUpPage.otherCnfPasswordValidation.replace("Replace", cnfPassOtherValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver,
+						SignUpPage.otherCnfPasswordValidation.replace("Replace", cnfPassOtherValidation),1);
 			}
 
 			if (!phoneNoValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.phoneNumberValidation.replace("Replace", phoneNoValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.phoneNumberValidation.replace("Replace", phoneNoValidation),1);
 			}
 
 			if (!otherPhoneValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver,
-						SignUpPage.otherphoneNumberValidation.replace("Replace", otherPhoneValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver,
+						SignUpPage.otherphoneNumberValidation.replace("Replace", otherPhoneValidation),1);
 			}
 
 			if (!companyNameValidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver,
-						SignUpPage.comapnyNameValidation.replace("Replace", companyNameValidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver,
+						SignUpPage.comapnyNameValidation.replace("Replace", companyNameValidation),1);
 			}
 
 			if (!jobTitlevalidation.equalsIgnoreCase("")) {
-				AppLibrary.verifyAbsent(driver, SignUpPage.jobTitleValidation.replace("Replace", jobTitlevalidation));
+				AppLibrary.verifyAbsentWithTimeOut(driver, SignUpPage.jobTitleValidation.replace("Replace", jobTitlevalidation),1);
 			}
 
 			driver.navigate().refresh();
 		}
 
 	}
+	
+	
+
+	
 
 	@Override
 	@AfterMethod

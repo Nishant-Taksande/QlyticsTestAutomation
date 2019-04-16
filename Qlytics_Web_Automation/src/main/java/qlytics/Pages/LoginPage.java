@@ -8,7 +8,7 @@ public class LoginPage {
 
 	WebDriver driver;
 
-	public static String qlyticsLoginLogo = "xpath://div[@class='login-box-narrow']//img[contains(@class,'login-logo')]";
+	public static String qlyticsLoginLogo = "xpath://div[form[button[@class='ant-btn ant-btn-primary ant-btn-block']]]//img[contains(@class,'login-logo')]";
 	public static String LoginTOYourAccLabel = "xpath://small[text()='LOG IN TO YOUR ACCOUNT']";
 	public static String EmailAddressInput = "xpath://input[@placeholder='Email Address']";
 	public static String LoginpasswordInput = "xpath://input[@placeholder='Password']";
