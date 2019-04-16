@@ -57,7 +57,7 @@ import jxl.write.biff.RowsExceededException;
 
 public class AppLibrary {
 
-	public static final long GLOBALTIMEOUT = 20;
+	public static final long GLOBALTIMEOUT = 40;
 	private WebDriver driver; // Driver instance
 	private WebDriver mailDriver; // Default Driver instance
 	private Configuration config;
@@ -1359,6 +1359,47 @@ public class AppLibrary {
 		}
 	}
 
+	
+	public static void verifyAbsentWithTimeOut(WebDriver driver, String locatorString,long timeOutInSeconds) {
+
+		String string = locatorString;
+		String[] parts = string.split(":");
+		String type = parts[0]; // 004
+		String object = parts[1];
+
+		driver.manage().timeouts().implicitlyWait(timeOutInSeconds, TimeUnit.SECONDS);
+		WebElement element = null;
+		try {
+			Reporter.log("Finding element with logic: " + locatorString, true);
+			if (type.equals("id")) {
+				element = driver.findElement(By.id(object));
+			} else if (type.equals("name")) {
+				element = driver.findElement(By.name(object));
+			} else if (type.equals("class")) {
+				element = driver.findElement(By.className(object));
+			} else if (type.equals("link")) {
+				element = driver.findElement(By.linkText(object));
+			} else if (type.equals("partiallink")) {
+				element = driver.findElement(By.partialLinkText(object));
+			} else if (type.equals("css")) {
+				element = driver.findElement(By.cssSelector(object));
+			} else if (type.equals("xpath")) {
+				element = driver.findElement(By.xpath(object));
+			}
+
+			org.testng.Assert.assertTrue(false,
+					"Expected element to be absent, but it was found on the page. Text = " + element.getText());
+
+		} catch (Exception e) {
+			// It's good if not found
+		} finally {
+			driver.manage().timeouts().implicitlyWait(AppLibrary.GLOBALTIMEOUT, TimeUnit.SECONDS);
+		}
+
+	}
+	
+	
+	
 	public static void verifyAbsent(WebDriver driver, String locatorString) {
 
 		String string = locatorString;
