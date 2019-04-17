@@ -42,7 +42,7 @@ public class LoginValidationTest extends TestBase {
 	}
 
 	@Test(dataProvider = "LoginValidation")
-	public void testLoginValidation(String email, String psd, String emailvalidation, String psdvalidation,
+	public void testLoginValidation(String id,String email, String psd, String emailvalidation, String psdvalidation,
 			String otherValidation, String exeIndicator) throws IOException {
 
 		appLibrary.launchAppDirectURL("");
@@ -58,15 +58,15 @@ public class LoginValidationTest extends TestBase {
 			AppLibrary.clickElement(driverw, LoginPage.LoginButton);
 
 			if (!emailvalidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driverw, LoginPage.emailValidation.replace("Replace", emailvalidation));
+				AppLibrary.verifyElement(driverw, LoginPage.emailValidation.replace("Replace", emailvalidation),true);
 			}
 
 			if (!psdvalidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driverw, LoginPage.passValidation.replace("Replace", psdvalidation));
+				AppLibrary.verifyElement(driverw, LoginPage.passValidation.replace("Replace", psdvalidation),true);
 			}
 
 			if (!otherValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driverw, LoginPage.noActiveAcc.replace("Replace", otherValidation));
+				AppLibrary.verifyElement(driverw, LoginPage.noActiveAcc.replace("Replace", otherValidation),true);
 				
 	
 			}

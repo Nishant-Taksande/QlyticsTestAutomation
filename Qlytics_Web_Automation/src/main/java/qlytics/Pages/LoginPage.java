@@ -38,18 +38,18 @@ public class LoginPage {
 	public LoginPage LoginPageUi() {
 
 		AppLibrary.sleep(1000);
-		AppLibrary.findElement(driver, qlyticsLoginLogo);
-		AppLibrary.findElement(driver, LoginTOYourAccLabel);
-		AppLibrary.findElement(driver, EmailAddressInput);
-		AppLibrary.findElement(driver, LoginpasswordInput);
-		AppLibrary.findElement(driver, LoginButton);
-		AppLibrary.findElement(driver, orLabel);
-		AppLibrary.findElement(driver, signUpLink);
-		AppLibrary.findElement(driver, forgotPassLink);
-		AppLibrary.findElement(driver, welcomeBackLabel);
-		AppLibrary.findElement(driver, platformLabel);
-		AppLibrary.findElement(driver, cognitiveLabel);
-		AppLibrary.findElement(driver, workDoneLabel);
+		AppLibrary.verifyElement(driver, qlyticsLoginLogo,true);
+		AppLibrary.verifyElement(driver, LoginTOYourAccLabel,true);
+		AppLibrary.verifyElement(driver, EmailAddressInput,true);
+		AppLibrary.verifyElement(driver, LoginpasswordInput,true);
+		AppLibrary.verifyElement(driver, LoginButton,true);
+		AppLibrary.verifyElement(driver, orLabel,true);
+		AppLibrary.verifyElement(driver, signUpLink,true);
+		AppLibrary.verifyElement(driver, forgotPassLink,true);
+		AppLibrary.verifyElement(driver, welcomeBackLabel,true);
+		AppLibrary.verifyElement(driver, platformLabel,true);
+		AppLibrary.verifyElement(driver, cognitiveLabel,true);
+		AppLibrary.verifyElement(driver, workDoneLabel,true);
 
 		return new LoginPage(driver);
 
