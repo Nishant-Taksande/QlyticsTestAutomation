@@ -286,11 +286,7 @@ public class ProfilePage {
 			AppLibrary.enterText(driver, decriptionInput, description);
 			AppLibrary.enterText(driver, areaInput, area);
 			AppLibrary.enterText(driver, School_CollegeInput, school);
-
-//			AppLibrary.clickElement(driver,degreeInput );
-//			WebElement element = AppLibrary.findElement(driver, degreeInput);
 			AppLibrary.selectDropDown(driver,degreeInput,"xpath://ul[@class='ant-select-dropdown-menu ant-select-dropdown-menu-root ant-select-dropdown-menu-vertical']", selectDegree);
-
 			AppLibrary.clickElement(driver, saveButton);
 //			AppLibrary.clickElement(driver, ProfilePage.profileButton);
 //			AppLibrary.sleep(5000);
@@ -329,6 +325,20 @@ public class ProfilePage {
 			AppLibrary.verifyElement(driver, cancelEmploymentButton, true);
 			AppLibrary.clickElement(driver, cancelEmploymentButton);
 			return new ProfilePage(driver);
+		}
+	
+		
+		public void FillEmploymentHistoryForm(String description, String area, String school, String selectDegree) {
+
+			AppLibrary.clickElement(driver, AddEmploymentHistoryButton);
+			AppLibrary.enterText(driver, compnayInput, description);
+			AppLibrary.enterText(driver, titleEmploymentInput, area);
+			
+			AppLibrary.enterText(driver, selectDate, school);
+			
+			AppLibrary.selectDropDown(driver,degreeInput,"xpath://ul[@class='ant-select-dropdown-menu ant-select-dropdown-menu-root ant-select-dropdown-menu-vertical']", selectDegree);
+			AppLibrary.clickElement(driver, saveButton);
+		
 		}
 		
 		

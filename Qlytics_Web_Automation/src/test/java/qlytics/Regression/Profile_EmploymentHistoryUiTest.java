@@ -10,28 +10,28 @@ import org.testng.annotations.Test;
 
 import qlytics.Lib.AppLibrary;
 import qlytics.Lib.TestBase;
-import qlytics.Pages.ContactInfoPage;
-import qlytics.Pages.ForgotPasswordPage;
+
 import qlytics.Pages.HeaderPage;
 import qlytics.Pages.LoginPage;
 import qlytics.Pages.MailinatorPage;
+import qlytics.Pages.ProfilePage;
 import qlytics.Pages.SignUpPage;
 
-public class ContactInfoUiTest extends TestBase {
+public class Profile_EmploymentHistoryUiTest extends TestBase {
 
 	public Logger logger;
 	String emailAddress;
 	@BeforeClass
 	public void setUp() throws IOException {
 		appLibrary = new AppLibrary();
-		logger = Logger.getLogger("ContactInfoUiTest");
-		System.out.println("ContactInfoUiTestStarted");
+		logger = Logger.getLogger("EmplymentHistoryUiTest");
+		System.out.println("EmplymentHistoryUiTestStarted");
 		PropertyConfigurator.configure("Log4j.properties");
 		Reporter.log(
 				"<h1><Center><Font face=\"arial\" color=\"Orange\">Log Summary</font></Center><h1><table border=\"1\" bgcolor=\"lightgray\">");
 
 	}
-
+	
 	@Test
 	public void registration() throws Exception {
 		String unique = AppLibrary.getFDate() + "_" + AppLibrary.randInt();
@@ -62,21 +62,18 @@ public class ContactInfoUiTest extends TestBase {
 		new HeaderPage(driver).Logout();
 
 	}
+
+	
 	
 	@Test(dependsOnMethods = "registration")
-	public void ContactInfoPageUi() throws Exception {
+	public void EmploymentHistoryPageUi() throws Exception {
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
 		new LoginPage(driver).Login(emailAddress+ "@mailinator.com", "Admin123!@#");
 		new HeaderPage(driver).clickOnAccountSetting();
-		new ContactInfoPage(driver).contactInfoUi();
+		new ProfilePage(driver).EmploymentHistoryUi();
 		System.out.println("Verified Successfully ");
 
 	}
-	
-	
-	
-	
-
 
 }

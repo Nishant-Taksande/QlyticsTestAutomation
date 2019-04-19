@@ -12,6 +12,7 @@
 		</classes>
 	</test>
 	
+
 	<test name="LoginFunctionalityTest">
 		<classes>
 			<class name="qlytics.Regression.LoginFunctionalityTest" />
@@ -59,10 +60,19 @@
 			<class name="qlytics.Regression.ContactInfoUiTest" />
 		</classes>
 	</test>
-	<test name="ProfileUiTest">
+	<test name="Profile_EducationUiTest">
 		<classes>
-			<class name="qlytics.Regression.ProfileUiTest" />
+			<class name="qlytics.Regression.Profile_EducationUiTest" />
 		</classes>
 	</test>
-	
+	<test name="Profile_EmploymentHistoryUiTest">
+		<classes>
+			<class name="qlytics.Regression.Profile_EmploymentHistoryUiTest" />
+		</classes>
+	</test>
+	<test name="Profile_PersonalDetailsUiTest">
+		<classes>
+			<class name="qlytics.Regression.Profile_PersonalDetailsUiTest" />
+		</classes>
+	</test>	
 </suite>
