@@ -47,7 +47,7 @@ public class SignUpAbsentValidationTest extends TestBase {
 	
 
 	@Test(dataProvider = "Registration")
-	public void testSignUpAbsentValidation(String email, String psd, String cnfPassword, String firstName,
+	public void testSignUpAbsentValidation(String id,String email, String psd, String cnfPassword, String firstName,
 			String lastName, String phoneNumber, String companyName, String jobTitle, String emailvalidation,
 			String psdvalidation, String passOtherValidation, String cnfPassValidation, String cnfPassOtherValidation,
 			String firstNameValidation, String lastNameValidation, String phoneNoValidation,

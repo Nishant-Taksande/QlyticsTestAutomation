@@ -14,9 +14,12 @@ public class HeaderPage {
 	public static String DataMarButton = "xpath://li[contains(text(),'Data Marketplace')]";
 	public static String organisationButton = "xpath://li[contains(text(),'Organisation Settings')]";
 
+	public static String accountSettingButton = "xpath://li[contains(text(),'Account Settings')]";
+	
 	// Logout
 	public static String profileButton = "xpath://ul[@class='action-menu ml-10 ant-menu ant-menu-root ant-menu-dark ant-menu-horizontal ng-star-inserted']";
 	public static String logoutButton = "xpath://*[contains(text(),'Logout')]";
+	
 
 	public HeaderPage(WebDriver driver) {
 		super();
@@ -32,4 +35,14 @@ public class HeaderPage {
 
 	}
 
+	public void clickOnAccountSetting() {
+
+		AppLibrary.sleep(1000);
+		AppLibrary.mouseHover(driver, profileButton);
+//		AppLibrary.clickElement(driver, profileButton);
+		AppLibrary.clickElement(driver, accountSettingButton);
+
+	}
+	
+	
 }

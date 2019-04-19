@@ -12,6 +12,7 @@
 		</classes>
 	</test>
 	
+
 	<test name="LoginFunctionalityTest">
 		<classes>
 			<class name="qlytics.Regression.LoginFunctionalityTest" />
@@ -33,7 +34,45 @@
 		</classes>
 	</test>
 	
+	<test name="ForgotPasswordPageUiTest">
+		<classes>
+			<class name="qlytics.Regression.ForgotPasswordPageUiTest" />
+		</classes>
+	</test>
+	<test name="ForgotPasswordFunctionalityTest">
+		<classes>
+			<class name="qlytics.Regression.ForgotPasswordFunctionalityTest" />
+		</classes>
+	</test>
+	<test name="ResetPasswordUiTest">
+		<classes>
+			<class name="qlytics.Regression.ResetPasswordUiTest" />
+		</classes>
+	</test>
+	<test name="SignUpAbsentValidationTest">
+		<classes>
+			<class name="qlytics.Regression.SignUpAbsentValidationTest" />
+		</classes>
+	</test>
 	
-	
-	
+	<test name="ContactInfoUiTest">
+		<classes>
+			<class name="qlytics.Regression.ContactInfoUiTest" />
+		</classes>
+	</test>
+	<test name="Profile_EducationUiTest">
+		<classes>
+			<class name="qlytics.Regression.Profile_EducationUiTest" />
+		</classes>
+	</test>
+	<test name="Profile_EmploymentHistoryUiTest">
+		<classes>
+			<class name="qlytics.Regression.Profile_EmploymentHistoryUiTest" />
+		</classes>
+	</test>
+	<test name="Profile_PersonalDetailsUiTest">
+		<classes>
+			<class name="qlytics.Regression.Profile_PersonalDetailsUiTest" />
+		</classes>
+	</test>	
 </suite>

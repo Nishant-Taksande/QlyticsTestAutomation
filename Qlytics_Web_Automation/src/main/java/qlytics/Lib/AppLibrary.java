@@ -18,13 +18,16 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -40,6 +43,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.Reporter;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -68,6 +72,7 @@ public class AppLibrary {
 	public String device;
 	public boolean isExecutionOnMobile;
 	public String currentTestName;
+	private AppLibrary appLibrary;
 
 	public String getCurrentTestName() {
 		return currentTestName;
@@ -1775,5 +1780,66 @@ public class AppLibrary {
         
 	}
 	
+	public void getScreenshot(String name) throws IOException {
+		driver = getCurrentDriverInstance();
+		String path = "screenshots/" + name;
+		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(src, new File(path));
+		System.out.println("screenshot at :" + path);
+		Reporter.log("screenshot for " + name + " available at :" + path, true);
+	}
+	
+	
+	public  void checkAlertsForScreenshot(ITestResult result,String testName) {
+		System.out.println("im doing nothign");
+		String screenshotName = result.getName() + "_" + browser + "_" + AppLibrary.randInt()
+		+ ".png";
+		
+		if (result.getStatus() == ITestResult.FAILURE) {
+			try {
+				
+				getScreenshot(screenshotName);
+				Reporter.log("Failed at URL: " + getCurrentDriverInstance().getCurrentUrl(), true);
+				int paramsLength = result.getParameters().length;
+				Reporter.log("Screenshot Name : " + screenshotName, true);
+				Reporter.log("ScreenShot for " + testName + " "
+						+ ((paramsLength > 0) ? " with parameter " + result.getParameters()[1] : "") + " saved as "
+						+ screenshotName + ".png", true);
+				driver.navigate().refresh();
 
+			} catch (Exception e) {
+				Reporter.log("Failed fetching URL and screenshot due to error:" + e.getMessage(), true);
+				e.printStackTrace();
+			}
+
+			if (getCurrentSessionID() != null) {
+				Reporter.log("Session id for " + testName + " is " + getCurrentSessionID(), true);
+				Reporter.log("Session details for " + testName
+						+ " can be found at https://www.browserstack.com/automate/sessions/"
+						+ getCurrentSessionID() + ".json", true);
+			}
+		}
+		
+	}
+	
+	
+	public static void selectDropDown(WebDriver driver,String locator,String locator2, String Option) {
+		
+
+		AppLibrary.enterText(driver, locator, Option);
+
+		AppLibrary.sleep(3000);
+
+		boolean flag = true;
+		List<WebElement> all = AppLibrary.findElements(driver, locator2);
+		for (WebElement element : all) {
+			if (element.getText().contains(Option)){
+				element.click();
+				flag = false;
+				break;
+			}
+		}
+	
+	}
+	
 }

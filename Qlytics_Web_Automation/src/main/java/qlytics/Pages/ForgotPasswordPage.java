@@ -22,13 +22,18 @@ public class ForgotPasswordPage {
 	public static String verificationMessage = "xpath://span[text()='Password reset e-mail has been sent.']";
 
 	// Reset Password
+	
+	public static String qlyticsLResetPasswordLogo = "xpath://div[h5[small[contains(text(),'reset your password')]]]//img[contains(@class,'login-logo')]";
 	public static String ResetPasswordLabel = "xpath://div[h5[small[contains(text(),'reset your password')]]]//small[text()='reset your password']";
 
 	public static String newpassInput = "xpath://div[h5[small[contains(text(),'reset your password')]]]//input[@formcontrolname='new_password1']";
 	public static String cnfNewPassInput = "xpath://div[h5[small[contains(text(),'reset your password')]]]//input[@formcontrolname='new_password2']";
 
 	public static String resetPassButton2 = "xpath://div[h5[small[contains(text(),'reset your password')]]]//button[span[contains(text(),'Reset Password')]]";
-
+	public static String remeberPassLabel = "xpath://div[h5[small[contains(text(),'reset your password')]]]//span[contains(text(),'Remembered your password?')]";
+	public static String resetPassloginLink = "xpath://div[h5[small[contains(text(),'reset your password')]]]//a[text()='Log in']";
+	
+	
 	public ForgotPasswordPage(WebDriver driver) {
 		super();
 		this.driver = driver;
@@ -37,16 +42,16 @@ public class ForgotPasswordPage {
 	public ForgotPasswordPage forgotPassUi() {
 
 		AppLibrary.sleep(1000);
-		AppLibrary.findElement(driver, qlyticsLForgotPasswordLogo);
-		AppLibrary.findElement(driver, recoverLabel);
-		AppLibrary.findElement(driver, emailInput);
-		AppLibrary.findElement(driver, resetPassButton);
-		AppLibrary.findElement(driver, remeberYourPassLabel);
-		AppLibrary.findElement(driver, remeberYourPasLoginLink);
-		AppLibrary.findElement(driver, welcomeBackLabel);
-		AppLibrary.findElement(driver, platformLabel);
-		AppLibrary.findElement(driver, cognitiveLabel);
-		AppLibrary.findElement(driver, workDoneLabel);
+		AppLibrary.verifyElement(driver, qlyticsLForgotPasswordLogo,true);
+		AppLibrary.verifyElement(driver, recoverLabel,true);
+		AppLibrary.verifyElement(driver, emailInput,true);
+		AppLibrary.verifyElement(driver, resetPassButton,true);
+		AppLibrary.verifyElement(driver, remeberYourPassLabel,true);
+		AppLibrary.verifyElement(driver, remeberYourPasLoginLink,true);
+		AppLibrary.verifyElement(driver, welcomeBackLabel,true);
+		AppLibrary.verifyElement(driver, platformLabel,true);
+		AppLibrary.verifyElement(driver, cognitiveLabel,true);
+		AppLibrary.verifyElement(driver, workDoneLabel,true);
 
 		return new ForgotPasswordPage(driver);
 
@@ -59,5 +64,27 @@ public class ForgotPasswordPage {
 		AppLibrary.clickElement(driver, resetPassButton2);
 
 	}
+	
+	public ForgotPasswordPage verifyResetPasswordPage() {
+		
+		
+		
+		AppLibrary.verifyElement(driver, qlyticsLResetPasswordLogo,true);
+		AppLibrary.verifyElement(driver, ResetPasswordLabel,true);
+		AppLibrary.verifyElement(driver, newpassInput,true);
+		AppLibrary.verifyElement(driver, cnfNewPassInput,true);
+		AppLibrary.verifyElement(driver, resetPassButton2,true);
+		AppLibrary.verifyElement(driver, resetPassloginLink,true);
+		
+		AppLibrary.verifyElement(driver, welcomeBackLabel,true);
+		AppLibrary.verifyElement(driver, platformLabel,true);
+		AppLibrary.verifyElement(driver, cognitiveLabel,true);
+		AppLibrary.verifyElement(driver, workDoneLabel,true);
+		
+		
+		return new ForgotPasswordPage(driver);
+	}
+	
+	
 
 }

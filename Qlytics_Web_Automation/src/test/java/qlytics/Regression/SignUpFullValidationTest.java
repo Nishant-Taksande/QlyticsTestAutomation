@@ -24,6 +24,7 @@ public class SignUpFullValidationTest extends TestBase {
 	public Logger logger;
 //	private WebDriver driverw;
 	private AppLibrary appLibrary;
+	private String testName;
 
 	@DataProvider(name = "Registration")
 	public String[][] getRegistrationDataFromExcelOne() throws Exception {
@@ -40,14 +41,16 @@ public class SignUpFullValidationTest extends TestBase {
 		PropertyConfigurator.configure("Log4j.properties");
 		Reporter.log(
 				"<h1><Center><Font face=\"arial\" color=\"Orange\">Log Summary</font></Center><h1><table border=\"1\" bgcolor=\"lightgray\">");
-
+		testName = this.getClass().getSimpleName();
+		testName = ((testName != null && !(testName.equals("Default test"))) ? testName
+				: this.getClass().getSimpleName());
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
 		AppLibrary.clickElement(driver, LoginPage.signUpLink);
 	}
 
 	@Test(dataProvider = "Registration")
-	public void testSignupFullValidation(String email, String psd, String cnfPassword, String firstName,
+	public void testSignupFullValidation(String id,String email, String psd, String cnfPassword, String firstName,
 			String lastName, String phoneNumber, String companyName, String jobTitle, String emailvalidation,
 			String psdvalidation, String passOtherValidation, String cnfPassValidation, String cnfPassOtherValidation,
 			String firstNameValidation, String lastNameValidation, String phoneNoValidation,
@@ -55,63 +58,62 @@ public class SignUpFullValidationTest extends TestBase {
 			String otherValidation, String exeIndicator) throws Exception {
 
 		if (exeIndicator.equalsIgnoreCase("Yes")) {
-			
+			driver.navigate().refresh();
 			new SignUpPage(driver).registrationForValidation(firstName, lastName, email, psd, cnfPassword, phoneNumber,
 					companyName, jobTitle);
 
 			if (!firstNameValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver, SignUpPage.firstNameValidation.replace("Replace", firstNameValidation));
+				AppLibrary.verifyElement(driver, SignUpPage.firstNameValidation.replace("Replace", firstNameValidation),true);
 			}
 
 			if (!lastNameValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver, SignUpPage.lastNamevalidation.replace("Replace", lastNameValidation));
+				AppLibrary.verifyElement(driver, SignUpPage.lastNamevalidation.replace("Replace", lastNameValidation),true);
 			}
 
 			if (!emailvalidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver, SignUpPage.businessValidation.replace("Replace", emailvalidation));
+				AppLibrary.verifyElement(driver, SignUpPage.businessValidation.replace("Replace", emailvalidation),true);
 			}
 
 			if (!psdvalidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver, SignUpPage.passwordValidation.replace("Replace", psdvalidation));
+				AppLibrary.verifyElement(driver, SignUpPage.passwordValidation.replace("Replace", psdvalidation),true);
 			}
 
 			if (!passOtherValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver,
-						SignUpPage.otherPasswordvalidation.replace("Replace", passOtherValidation));
+				AppLibrary.verifyElement(driver,
+						SignUpPage.otherPasswordvalidation.replace("Replace", passOtherValidation),true);
 			}
 			if (!cnfPassValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver, SignUpPage.cnfPasswordValidation.replace("Replace", cnfPassValidation));
+				AppLibrary.verifyElement(driver, SignUpPage.cnfPasswordValidation.replace("Replace", cnfPassValidation),true);
 			}
 			if (!cnfPassOtherValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver,
-						SignUpPage.otherCnfPasswordValidation.replace("Replace", cnfPassOtherValidation));
+				AppLibrary.verifyElement(driver,
+						SignUpPage.otherCnfPasswordValidation.replace("Replace", cnfPassOtherValidation),true);
 			}
 
 			if (!phoneNoValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver, SignUpPage.phoneNumberValidation.replace("Replace", phoneNoValidation));
+				AppLibrary.verifyElement(driver, SignUpPage.phoneNumberValidation.replace("Replace", phoneNoValidation),true);
 			}
 
 			if (!otherPhoneValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver,
-						SignUpPage.otherphoneNumberValidation.replace("Replace", otherPhoneValidation));
+				AppLibrary.verifyElement(driver,
+						SignUpPage.otherphoneNumberValidation.replace("Replace", otherPhoneValidation),true);
 			}
 
 			if (!companyNameValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver,
-						SignUpPage.comapnyNameValidation.replace("Replace", companyNameValidation));
+				AppLibrary.verifyElement(driver,
+						SignUpPage.comapnyNameValidation.replace("Replace", companyNameValidation),true);
 			}
 
 			if (!jobTitlevalidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver,
-						SignUpPage.jobTitleValidation.replace("Replace", companyNameValidation));
+				AppLibrary.verifyElement(driver,
+						SignUpPage.jobTitleValidation.replace("Replace", jobTitlevalidation),true);
 			}
 			
 			if (!otherValidation.equalsIgnoreCase("")) {
-				AppLibrary.findElement(driver,
-						SignUpPage.otherValidation.replace("Replace", otherValidation));
+				AppLibrary.verifyElement(driver,
+						SignUpPage.otherValidation.replace("Replace", otherValidation),true);
 			}
 			
-			driver.navigate().refresh();
 		}
 
 	}
@@ -119,7 +121,8 @@ public class SignUpFullValidationTest extends TestBase {
 	@Override
 	@AfterMethod
 	public void checkAlerts(ITestResult result) {
-		System.out.println("im doing nothign");
+		appLibrary.checkAlertsForScreenshot(result, testName);
+		
 	}
 
 	@Override
