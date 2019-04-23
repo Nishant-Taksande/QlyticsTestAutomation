@@ -6,7 +6,8 @@ import qlytics.Lib.AppLibrary;
 
 public class SignUpPage {
 
-	WebDriver driver;
+	private AppLibrary appLibrary;
+	private WebDriver driver;
 
 	public static String qlyticsSignUpLogo = "xpath://div[@class='login-box']//img[contains(@class,'login-logo')]";
 	public static String createYourAccLabel = "xpath://small[text()='CREATE YOUR ACCOUNT']";
@@ -60,11 +61,13 @@ public class SignUpPage {
 	
 	public static String otherValidation = "xpath://span[contains(text(),'Replace')]";
 
-	public SignUpPage(WebDriver driver) {
+	public SignUpPage(AppLibrary appLibrary)
+	{
 		super();
-		this.driver = driver;
-
+		this.appLibrary=appLibrary;
+		this.driver =appLibrary.getCurrentDriverInstance();
 	}
+	
 
 	public SignUpPage verifySignUpPageUi() {
 
@@ -95,11 +98,11 @@ public class SignUpPage {
 		AppLibrary.verifyElement(driver, cognitiveLabel,true);
 		AppLibrary.verifyElement(driver, workDoneLabel,true);
 		AppLibrary.sleep(1000);
-		return new SignUpPage(driver);
+		return new SignUpPage(appLibrary);
 
 	}
 
-	public void registration(String firstName, String lastName, String email, String pass, String CnfPass,
+	public SignUpPage registration(String firstName, String lastName, String email, String pass, String CnfPass,
 			String PhoneNo, String CompanyName, String jobTitle) {
 
 		AppLibrary.enterText(driver, firtsNameInput, firstName);
@@ -111,9 +114,11 @@ public class SignUpPage {
 		AppLibrary.enterText(driver, companyNameInput, CompanyName);
 		AppLibrary.enterText(driver, jobTitleInput, jobTitle);
 		AppLibrary.clickElement(driver, registerButton);
+		
+		return new SignUpPage(appLibrary);
 	}
 
-	public void registrationForValidation(String firstName, String lastName, String email, String pass, String CnfPass,
+	public SignUpPage registrationForValidation(String firstName, String lastName, String email, String pass, String CnfPass,
 			String PhoneNo, String CompanyName, String jobTitle) {
 
 		if (!firstName.equalsIgnoreCase("")) {
@@ -142,6 +147,6 @@ public class SignUpPage {
 		}
 
 		AppLibrary.clickElement(driver, registerButton);
-
+		return new SignUpPage(appLibrary);
 	}
 }

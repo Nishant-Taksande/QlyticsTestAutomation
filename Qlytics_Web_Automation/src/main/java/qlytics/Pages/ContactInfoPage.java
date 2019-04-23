@@ -1,11 +1,13 @@
 package qlytics.Pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import qlytics.Lib.AppLibrary;
 
 public class ContactInfoPage {
-	WebDriver driver;
+	private AppLibrary appLibrary;
+	private WebDriver driver;
 
 	// contact Information
 	public static String contactInfoButton = "xpath://li[span[contains(text(),'Contact Information')]]";
@@ -14,7 +16,8 @@ public class ContactInfoPage {
 	public static String contactInfoParent = "xpath://div[ql-contact-information[nz-card[div[div[div[text()='Contact Information']]]]]]";
 
 	public static String profileImgLabel = "" + contactInfoParent + "//label[text()='Profile Picture *']";
-	public static String profileUploadButton = "" + contactInfoParent + "//div[@class='ant-upload']";
+	public static String profileUploadButton = "xpath://input[@type='file']";
+	public static String profileImg = "xpath://a[contains(@class,'ant-upload-list-item-thumbnail')]";
 	public static String firstNameLabel = "" + contactInfoParent + "//label[@for='first_name']";
 	public static String firstNameInput = "" + contactInfoParent + "//input[@id='first_name']";
 	public static String lastnameLabel = "" + contactInfoParent + "//label[@for='last_name']";
@@ -27,13 +30,15 @@ public class ContactInfoPage {
 	public static String phoneNoInput = "" + contactInfoParent + "//input[@id='phone_number']";
 
 	public static String saveButtonContInfo = "" + contactInfoParent + "//button[//span[text()='Save changes']]";
-	
-	
-	public ContactInfoPage(WebDriver driver) {
+
+	public static String profileUploadMessage = "xpath://*[contains(text(),'profile picture uploaded successfully.')]";
+
+	public ContactInfoPage(AppLibrary appLibrary) {
 		super();
-		this.driver = driver;
+		this.appLibrary = appLibrary;
+		this.driver = appLibrary.getCurrentDriverInstance();
 	}
-	
+
 	public ContactInfoPage contactInfoUi() {
 
 		AppLibrary.sleep(3000);
@@ -51,8 +56,33 @@ public class ContactInfoPage {
 		AppLibrary.verifyElement(driver, phoneNoInput, true);
 		AppLibrary.verifyElement(driver, saveButtonContInfo, true);
 
-		return new ContactInfoPage(driver);
+		return new ContactInfoPage(appLibrary);
 
 	}
-	
+
+	public ContactInfoPage verifyContactInfoData(String firstName, String lastname, String PhoneNo, String jobTitle)
+			throws Exception {
+		AppLibrary.sleep(5000);
+		AppLibrary.waitUntilElementDisplayed(driver, contactInfoLabel);
+		AppLibrary.verificationWithAttribute(driver, firstNameInput, firstName);
+		AppLibrary.verificationWithAttribute(driver, lastNameInput, lastname);
+		AppLibrary.verificationWithAttribute(driver, phoneNoInput, PhoneNo);
+		AppLibrary.verificationWithAttribute(driver, jobTitleInput, jobTitle);
+
+		return new ContactInfoPage(appLibrary);
+	}
+
+	public ContactInfoPage editContactInfo(String firstName, String lastname, String PhoneNo, String jobTitle)
+			throws Exception {
+		AppLibrary.sleep(5000);
+
+		AppLibrary.waitUntilElementDisplayed(driver, contactInfoLabel);
+		AppLibrary.enterText(driver, firstNameInput, firstName);
+		AppLibrary.enterText(driver, lastNameInput, lastname);
+		AppLibrary.enterText(driver, phoneNoInput, PhoneNo);
+		AppLibrary.enterText(driver, jobTitleInput, jobTitle);
+		AppLibrary.clickElement(driver, saveButtonContInfo);
+		return new ContactInfoPage(appLibrary);
+	}
+
 }

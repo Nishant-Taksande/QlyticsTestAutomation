@@ -46,7 +46,7 @@ public class SignUpFunctionalityTest extends TestBase {
 		appLibrary.launchAppDirectURL("");
 		AppLibrary.clickElement(driver, SignUpPage.signUpLink);
 
-		new SignUpPage(driver).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
+		new SignUpPage(appLibrary).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
 				"8989700929", firstname + "Company", "Tester");
 
 		AppLibrary.findElement(driver, SignUpPage.VerificationMessageForSignUp);
@@ -54,11 +54,11 @@ public class SignUpFunctionalityTest extends TestBase {
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
 //		new MailinatorPage(driver).getVerificationOnNewTab(emailAddress);
-		new MailinatorPage(driver).getVerification(emailAddress);
+		new MailinatorPage(appLibrary).getVerification(emailAddress);
 
-		new LoginPage(driver).Login(emailAddress + "@mailinator.com", Password);
+		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", Password);
 
-		new HeaderPage(driver).Logout();
+		new HeaderPage(appLibrary).Logout();
 
 	}
 

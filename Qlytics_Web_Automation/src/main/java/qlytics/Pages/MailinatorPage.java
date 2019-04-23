@@ -1,18 +1,12 @@
 package qlytics.Pages;
 
-import static org.testng.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Properties;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import qlytics.Lib.AppLibrary;
 
 public class MailinatorPage {
 
+	private AppLibrary appLibrary;
 	private WebDriver mailDriver;
 
 //	WebDriver driver;
@@ -33,13 +27,21 @@ public class MailinatorPage {
 
 	public static String PasswordText = "xpath://tr//td//b";
 
-	public MailinatorPage(WebDriver Driver) {
+//	public MailinatorPage(WebDriver Driver) {
+//		super();
+//		this.mailDriver = Driver;
+////		this.driver = driver;
+//	}
+//	
+	public MailinatorPage(AppLibrary appLibrary)
+	{
 		super();
-		this.mailDriver = Driver;
-//		this.driver = driver;
+		this.appLibrary=appLibrary;
+		this.mailDriver =appLibrary.getCurrentDriverInstance();
 	}
+	
 
-	public void getVerification(String email) throws Exception {
+	public MailinatorPage getVerification(String email) throws Exception {
 
 		// System.setProperty("webdriver.firefox.profile", "default");
 		AppLibrary ap = new AppLibrary();
@@ -94,9 +96,11 @@ public class MailinatorPage {
 			mailDriver.quit();
 			throw new Exception("Failed to access verification");
 		}
+		
+		return new MailinatorPage(appLibrary);
 	}
 
-	public void getVerificationOnNewTab(String email) throws Exception {
+	public MailinatorPage getVerificationOnNewTab(String email) throws Exception {
 		AppLibrary ap = new AppLibrary();
 		ap.openNewTabByJavaScript(mailDriver);
 
@@ -153,6 +157,8 @@ public class MailinatorPage {
 			mailDriver.quit();
 			throw new Exception("Failed to access verification");
 		}
+		
+		return new MailinatorPage(appLibrary);
 	}
 
 	public String getPassword(String email) throws Exception {
@@ -200,7 +206,7 @@ public class MailinatorPage {
 		return text;
 	}
 
-	public void forgotPasswordVerification(String email) throws Exception {
+	public MailinatorPage forgotPasswordVerification(String email) throws Exception {
 
 		AppLibrary ap = new AppLibrary();
 		ap.openNewTabByJavaScript(mailDriver);
@@ -259,6 +265,10 @@ public class MailinatorPage {
 			throw new Exception("Failed to access verification");
 		}
 
+		
+		return new MailinatorPage(appLibrary);
 	}
+	
+	
 
 }
