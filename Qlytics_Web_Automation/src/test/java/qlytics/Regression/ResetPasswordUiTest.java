@@ -47,18 +47,18 @@ public class ResetPasswordUiTest extends TestBase {
 		appLibrary.launchAppDirectURL("");
 		AppLibrary.clickElement(driver, SignUpPage.signUpLink);
 
-		new SignUpPage(driver).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
+		new SignUpPage(appLibrary).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
 				"8989700929", firstname + "Company", "Tester");
 
 		AppLibrary.findElement(driver, SignUpPage.VerificationMessageForSignUp);
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
-		new MailinatorPage(driver).getVerificationOnNewTab(emailAddress);
+		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress);
 
-		new LoginPage(driver).Login(emailAddress + "@mailinator.com", "Admin123!@#");
+		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", "Admin123!@#");
 		AppLibrary.findElement(driver, HeaderPage.DataMarButton);
-		new HeaderPage(driver).Logout();
+		new HeaderPage(appLibrary).Logout();
 
 	}
 
@@ -71,9 +71,9 @@ public class ResetPasswordUiTest extends TestBase {
 		AppLibrary.findElement(driver, ForgotPasswordPage.emailInput).sendKeys(emailAddress + "@mailinator.com");
 		AppLibrary.clickElement(driver, ForgotPasswordPage.resetPassButton);
 		AppLibrary.findElement(driver, ForgotPasswordPage.verificationMessage);
-		new MailinatorPage(driver).forgotPasswordVerification(emailAddress);
+		new MailinatorPage(appLibrary).forgotPasswordVerification(emailAddress);
 
-		new ForgotPasswordPage(driver).verifyResetPasswordPage();
+		new ForgotPasswordPage(appLibrary).verifyResetPasswordPage();
 		System.out.println("Verified Successfully ");
 
 	}

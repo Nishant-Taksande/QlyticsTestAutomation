@@ -33,7 +33,7 @@ public class SignUpPageUiTest extends TestBase {
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
 		AppLibrary.clickElement(driver, SignUpPage.signUpLink);
-		new SignUpPage(driver).verifySignUpPageUi();
+		new SignUpPage(appLibrary).verifySignUpPageUi();
 		System.out.println("Verified Successfully ");
 
 	}

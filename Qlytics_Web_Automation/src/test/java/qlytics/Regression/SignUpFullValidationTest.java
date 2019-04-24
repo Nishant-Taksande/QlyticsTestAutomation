@@ -59,7 +59,7 @@ public class SignUpFullValidationTest extends TestBase {
 
 		if (exeIndicator.equalsIgnoreCase("Yes")) {
 			driver.navigate().refresh();
-			new SignUpPage(driver).registrationForValidation(firstName, lastName, email, psd, cnfPassword, phoneNumber,
+			new SignUpPage(appLibrary).registrationForValidation(firstName, lastName, email, psd, cnfPassword, phoneNumber,
 					companyName, jobTitle);
 
 			if (!firstNameValidation.equalsIgnoreCase("")) {

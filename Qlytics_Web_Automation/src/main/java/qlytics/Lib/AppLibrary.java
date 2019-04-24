@@ -1,5 +1,13 @@
 package qlytics.Lib;
 
+import java.awt.AWTException;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +25,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -1255,7 +1265,7 @@ public class AppLibrary {
 		else if (!text.equalsIgnoreCase("")) {
 			driver.findElement(getBy(driver, locator)).sendKeys(text);
 		}
-		
+
 	}
 
 	public static void clickElement(WebDriver driver, String locator) {
@@ -1282,28 +1292,29 @@ public class AppLibrary {
 		return AppLibrary.findElement(driver, locator).isSelected();
 	}
 
-	public void uploadImage(WebDriver driver, String locator, String imageName, String verificationLocator) {
+	public void uploadImage(WebDriver driver, String locator, String imageName, String verificationLocator,
+			String Attribute) {
 
 		String finalPath = "";
 		File fp = new File(imageName);
 		String imagePath = fp.getAbsolutePath();
-		finalPath = imagePath.replace(imageName, "resources" + File.separator + imageName);
+		finalPath = imagePath.replace(imageName, "Resources" + File.separator + imageName);
 		System.out.println(finalPath);
 
 		AppLibrary.findElement(driver, locator).sendKeys(finalPath);
 		AppLibrary.sleep(5000);
 
-		verifyUploadedImagePath(verificationLocator, imageName);
+		verifyUploadedImagePath(verificationLocator, imageName, Attribute);
 	}
 
-	public boolean verifyUploadedImagePath(String locator, String imageName) {
+	public boolean verifyUploadedImagePath(String locator, String imageName, String attribute) {
 
 		String[] temp = imageName.split("\\.");
 		int counter;
 		for (counter = 5; counter > 0; counter--) {
-			AppLibrary.sleep(10000);
+			AppLibrary.sleep(5000);
 			try {
-				if (driver.findElement(By.xpath(locator.replace("xpath:", ""))).getAttribute("value")
+				if (driver.findElement(By.xpath(locator.replace("xpath:", ""))).getAttribute(attribute)
 						.contains(temp[0])) {
 					return true;
 				}
@@ -1364,8 +1375,7 @@ public class AppLibrary {
 		}
 	}
 
-	
-	public static void verifyAbsentWithTimeOut(WebDriver driver, String locatorString,long timeOutInSeconds) {
+	public static void verifyAbsentWithTimeOut(WebDriver driver, String locatorString, long timeOutInSeconds) {
 
 		String string = locatorString;
 		String[] parts = string.split(":");
@@ -1402,9 +1412,7 @@ public class AppLibrary {
 		}
 
 	}
-	
-	
-	
+
 	public static void verifyAbsent(WebDriver driver, String locatorString) {
 
 		String string = locatorString;
@@ -1638,6 +1646,7 @@ public class AppLibrary {
 	// }
 
 	public static void selectDropdown(WebDriver driver, String parent, String child) {
+
 		AppLibrary.clickElement(driver, parent);
 		AppLibrary.sleep(2000);
 		AppLibrary.clickElement(driver, child);
@@ -1677,7 +1686,7 @@ public class AppLibrary {
 				"values didnot match for " + locator + "Expected =" + expectedValue + "  Actual =" + actualValue);
 	}
 
-	public static void verificationEmail(WebDriver driver, String locator, String expectedValue) {
+	public static void verificationWithAttribute(WebDriver driver, String locator, String expectedValue) {
 
 		String actualValue = AppLibrary.findElement(driver, locator).getAttribute("value");
 
@@ -1772,14 +1781,13 @@ public class AppLibrary {
 			return false;
 		}
 	}
-	
+
 	public static void openNewTabByJavaScript(WebDriver driver) {
 
-    
-        ((JavascriptExecutor)driver).executeScript("window.open();");
-        
+		((JavascriptExecutor) driver).executeScript("window.open();");
+
 	}
-	
+
 	public void getScreenshot(String name) throws IOException {
 		driver = getCurrentDriverInstance();
 		String path = "screenshots/" + name;
@@ -1788,16 +1796,14 @@ public class AppLibrary {
 		System.out.println("screenshot at :" + path);
 		Reporter.log("screenshot for " + name + " available at :" + path, true);
 	}
-	
-	
-	public  void checkAlertsForScreenshot(ITestResult result,String testName) {
+
+	public void checkAlertsForScreenshot(ITestResult result, String testName) {
 		System.out.println("im doing nothign");
-		String screenshotName = result.getName() + "_" + browser + "_" + AppLibrary.randInt()
-		+ ".png";
-		
+		String screenshotName = result.getName() + "_" + browser + "_" + AppLibrary.randInt() + ".png";
+
 		if (result.getStatus() == ITestResult.FAILURE) {
 			try {
-				
+
 				getScreenshot(screenshotName);
 				Reporter.log("Failed at URL: " + getCurrentDriverInstance().getCurrentUrl(), true);
 				int paramsLength = result.getParameters().length;
@@ -1815,31 +1821,50 @@ public class AppLibrary {
 			if (getCurrentSessionID() != null) {
 				Reporter.log("Session id for " + testName + " is " + getCurrentSessionID(), true);
 				Reporter.log("Session details for " + testName
-						+ " can be found at https://www.browserstack.com/automate/sessions/"
-						+ getCurrentSessionID() + ".json", true);
+						+ " can be found at https://www.browserstack.com/automate/sessions/" + getCurrentSessionID()
+						+ ".json", true);
 			}
 		}
-		
-	}
-	
-	
-	public static void selectDropDown(WebDriver driver,String locator,String locator2, String Option) {
-		
 
-		AppLibrary.enterText(driver, locator, Option);
+	}
+
+	public static void selectDropDown(WebDriver driver, String locator, String locator2, String Option) {
+
+		AppLibrary.findElement(driver, locator).click();
+		AppLibrary.findElement(driver, locator).sendKeys(Option);
+		;
 
 		AppLibrary.sleep(3000);
 
 		boolean flag = true;
 		List<WebElement> all = AppLibrary.findElements(driver, locator2);
 		for (WebElement element : all) {
-			if (element.getText().contains(Option)){
+			if (element.getText().contains(Option)) {
 				element.click();
 				flag = false;
 				break;
 			}
 		}
-	
+
 	}
+
+	public static void customselectDropdownOption(WebDriver driver, String parent, String child, String text,String clickElememnt) {
+		AppLibrary.clickElement(driver,clickElememnt );
+		AppLibrary.findElement(driver, parent).sendKeys(text);
+
+		AppLibrary.sleep(1000);
+
+		AppLibrary.clickElement(driver, child);
+
+		AppLibrary.findElement(driver, parent).sendKeys(Keys.ESCAPE);
+	}
+	
+	public static void verificationwithtwoValue(WebDriver driver, String actualValue, String expectedValue) {
+
+		Assert.assertEquals(actualValue.replace(",", ""), expectedValue,
+				"values didnot match for " + actualValue + "Expected =" + expectedValue + "  Actual =" + actualValue);
+	}
+	
+	
 	
 }

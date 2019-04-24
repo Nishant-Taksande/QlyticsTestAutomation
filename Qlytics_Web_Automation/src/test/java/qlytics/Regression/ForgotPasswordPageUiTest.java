@@ -33,7 +33,7 @@ public class ForgotPasswordPageUiTest extends TestBase {
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
 		AppLibrary.clickElement(driver, LoginPage.forgotPassLink);
-		new ForgotPasswordPage(driver).forgotPassUi();
+		new ForgotPasswordPage(appLibrary).forgotPassUi();
 		System.out.println("Verified Successfully ");
 
 	}

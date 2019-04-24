@@ -46,14 +46,14 @@ public class LoginFunctionalityTest extends TestBase {
 		appLibrary.launchAppDirectURL("");
 		AppLibrary.clickElement(driver, SignUpPage.signUpLink);
 
-		new SignUpPage(driver).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
+		new SignUpPage(appLibrary).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
 				"8989700929", firstname + "Company", "Tester");
 
 		AppLibrary.findElement(driver, SignUpPage.VerificationMessageForSignUp);
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
-		new MailinatorPage(driver).getVerification(emailAddress);
+		new MailinatorPage(appLibrary).getVerification(emailAddress);
 
 	}
 
@@ -62,11 +62,11 @@ public class LoginFunctionalityTest extends TestBase {
 
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
-		new LoginPage(driver).Login(emailAddress + "@mailinator.com", "Admin123!@#");
+		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", "Admin123!@#");
 		
 		AppLibrary.findElement(driver, "xpath://li[contains(text(),'Data Marketplace')]");
 		
-		new HeaderPage(driver).Logout();
+		new HeaderPage(appLibrary).Logout();
 
 	}
 

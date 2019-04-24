@@ -8,19 +8,23 @@ import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.sun.jna.platform.win32.ShellAPI.APPBARDATA;
+
 import qlytics.Lib.AppLibrary;
 import qlytics.Lib.TestBase;
 import qlytics.Pages.ContactInfoPage;
-import qlytics.Pages.ForgotPasswordPage;
 import qlytics.Pages.HeaderPage;
 import qlytics.Pages.LoginPage;
 import qlytics.Pages.MailinatorPage;
+import qlytics.Pages.ProfilePage;
 import qlytics.Pages.SignUpPage;
 
-public class ContactInfoUiTest extends TestBase {
+public class ContactInfoEditTest extends TestBase {
 
 	public Logger logger;
 	String emailAddress;
+	String Password;
+
 	@BeforeClass
 	public void setUp() throws IOException {
 		appLibrary = new AppLibrary();
@@ -39,17 +43,18 @@ public class ContactInfoUiTest extends TestBase {
 		System.out.println(emailAddress);
 
 		String firstname = appLibrary.generateRandomString(10);
-		String LastName = appLibrary.generateRandomString(10);
-
-		String Password = "Admin123!@#";
+		String lastName = appLibrary.generateRandomString(10);
+		String jobTitle = "Tester" + appLibrary.generateRandomString(3);
+		String PhoneNumber = appLibrary.generateRandomNumber(10);
+		Password = "Admin123!@#";
 
 		driver = appLibrary.getDriverInstance();
 
 		appLibrary.launchAppDirectURL("");
 		AppLibrary.clickElement(driver, SignUpPage.signUpLink);
 
-		new SignUpPage(appLibrary).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
-				"8989700929", firstname + "Company", "Tester");
+		new SignUpPage(appLibrary).registration(firstname, lastName, emailAddress + "@mailinator.com", Password,
+				Password, PhoneNumber, firstname + "Company", jobTitle);
 
 		AppLibrary.findElement(driver, SignUpPage.VerificationMessageForSignUp);
 
@@ -62,21 +67,39 @@ public class ContactInfoUiTest extends TestBase {
 		new HeaderPage(appLibrary).Logout();
 
 	}
-	
-	@Test(dependsOnMethods = "registration")
-	public void ContactInfoPageUi() throws Exception {
+
+	@Test
+	public void verifyContactInfoPageWithSignUp() throws Exception {
+
+		String firstname = appLibrary.generateRandomString(10);
+		String lastName = appLibrary.generateRandomString(10);
+		String jobTitle = "Tester" + appLibrary.generateRandomString(3);
+		String PhoneNumber = appLibrary.generateRandomNumber(10);
+
+		Password = "Admin123!@#";
+
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
-		new LoginPage(appLibrary).Login(emailAddress+ "@mailinator.com", "Admin123!@#");
+		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", Password);
 		new HeaderPage(appLibrary).clickOnAccountSetting();
-		new ContactInfoPage(appLibrary).contactInfoUi();
+		appLibrary.uploadImage(driver, ContactInfoPage.profileUploadButton, "ProfilePic.png",
+				ContactInfoPage.profileImg, "href");
+		new ContactInfoPage(appLibrary).editContactInfo(firstname, lastName, PhoneNumber, jobTitle);
+
+		AppLibrary.clickElement(driver, ProfilePage.profileButton);
+		AppLibrary.sleep(3000);
+		AppLibrary.clickElement(driver, ContactInfoPage.contactInfoButton);
+		AppLibrary.sleep(2000);
+
+		
+		appLibrary.uploadImage(driver, ContactInfoPage.profileUploadButton, "TestImg.jpg", ContactInfoPage.profileImg,
+				"href");
+		// Verification
+		new ContactInfoPage(appLibrary).verifyContactInfoData(firstname, lastName, PhoneNumber, jobTitle);
+		appLibrary.verifyUploadedImagePath(HeaderPage.ProfilePicHeader, "TestImg.jpg", "src");
+
 		System.out.println("Verified Successfully ");
 
 	}
-	
-	
-	
-	
-
 
 }
