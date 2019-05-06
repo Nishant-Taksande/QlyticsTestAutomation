@@ -60,7 +60,7 @@ public class ContactInfoEditTest extends TestBase {
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
-		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress);
+		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress,"SignUp");
 
 		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", "Admin123!@#");
 		AppLibrary.findElement(driver, HeaderPage.DataMarButton);
@@ -68,7 +68,7 @@ public class ContactInfoEditTest extends TestBase {
 
 	}
 
-	@Test
+	@Test(dependsOnMethods = "registration")
 	public void verifyContactInfoPageWithSignUp() throws Exception {
 
 		String firstname = appLibrary.generateRandomString(10);

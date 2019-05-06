@@ -75,4 +75,81 @@
 			<class name="qlytics.Regression.Profile_PersonalDetailsUiTest" />
 		</classes>
 	</test>	
+	<test name="PersonalDetailsProfileNameVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.PersonalDetailsProfileNameVerificationTest" />
+		</classes>
+	</test>	
+	<test name="PersonalDetailsVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.PersonalDetailsVerificationTest" />
+		</classes>
+	</test>	
+	<test name="ContactInfoEditTest">
+		<classes>
+			<class name="qlytics.Regression.ContactInfoEditTest" />
+		</classes>
+	</test>	
+	<test name="ContactInfoPageVerification">
+		<classes>
+			<class name="qlytics.Regression.ContactInfoPageVerification" />
+		</classes>
+	</test>	
+	
+	<test name="PersonalDetailsEditTest">
+		<classes>
+			<class name="qlytics.Regression.PersonalDetailsEditTest" />
+		</classes>
+	</test>	
+	<test name="EducationVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.EducationVerificationTest" />
+		</classes>
+	</test>	
+	<test name="PaymentMethodFunctionalityTest">
+		<classes>
+			<class name="qlytics.Regression.PaymentMethodFunctionalityTest" />
+		</classes>
+	</test>	
+	<test name="PaymentMethodUiTest">
+		<classes>
+			<class name="qlytics.Regression.PaymentMethodUiTest" />
+		</classes>
+	</test>	
+	<test name="InvitationUiTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationUiTest" />
+		</classes>
+	</test>	
+	<test name="InvitationVerificationWithSignUpTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationVerificationWithSignUpTest" />
+		</classes>
+	</test>	
+	<test name="InvitationSigupPageUiTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationSigupPageUiTest" />
+		</classes>
+	</test>	
+	<test name="InvitationMemberUserVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationMemberUserVerificationTest" />
+		</classes>
+	</test>	
+	<test name="InvitationManagerUserVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationManagerUserVerificationTest" />
+		</classes>
+	</test>	
+	<test name="InvitationDeveloperUserVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationDeveloperUserVerificationTest" />
+		</classes>
+	</test>
+	<test name="InvitationAdminUserVerificationTest">
+		<classes>
+			<class name="qlytics.Regression.InvitationAdminUserVerificationTest" />
+		</classes>
+	</test>	
+	
 </suite>

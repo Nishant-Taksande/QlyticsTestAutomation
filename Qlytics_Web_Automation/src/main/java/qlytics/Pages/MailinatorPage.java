@@ -2,6 +2,7 @@ package qlytics.Pages;
 
 import org.openqa.selenium.WebDriver;
 
+import bsh.org.objectweb.asm.Label;
 import qlytics.Lib.AppLibrary;
 
 public class MailinatorPage {
@@ -11,9 +12,11 @@ public class MailinatorPage {
 
 //	WebDriver driver;
 
-	public static String verifyEmailLabel = "xpath://td[contains(text(),'[Qlytics Test] Please Confirm Your E-mail Address')]";
+	public static String verifySignUpEmailLabel = "xpath://td[contains(text(),'[Qlytics] Please Confirm Your E-mail Address')]";
 	
-	public static String verifyResetLabel = "xpath://td[contains(text(),'Password reset on Qlytics Test')]";
+	public static String verifyInvitationEmailLabel = "xpath://td[contains(text(),'Invitation to join')]";
+	
+	public static String verifyResetLabel = "xpath://td[contains(text(),'Password reset on Qlytics')]";
 
 	public static String iframe = "xpath://iframe[@id='msg_body']";
 
@@ -62,7 +65,7 @@ public class MailinatorPage {
 							.get("https://www.mailinator.com/v3/index.jsp?zone=public&query=" + email + "#/#inboxpane");
 					AppLibrary.sleep(3000);
 
-					AppLibrary.syncAndClick(mailDriver, verifyEmailLabel);
+					AppLibrary.syncAndClick(mailDriver, verifySignUpEmailLabel);
 
 				} catch (Exception e) {
 					flag = true;
@@ -100,7 +103,7 @@ public class MailinatorPage {
 		return new MailinatorPage(appLibrary);
 	}
 
-	public MailinatorPage getVerificationOnNewTab(String email) throws Exception {
+	public MailinatorPage getVerificationOnNewTab(String email,String Label) throws Exception {
 		AppLibrary ap = new AppLibrary();
 		ap.openNewTabByJavaScript(mailDriver);
 
@@ -119,8 +122,15 @@ public class MailinatorPage {
 					mailDriver
 							.get("https://www.mailinator.com/v3/index.jsp?zone=public&query=" + email + "#/#inboxpane");
 					AppLibrary.sleep(3000);
+					
+					if(Label.equalsIgnoreCase("SignUp")) {
 
-					AppLibrary.syncAndClick(mailDriver, verifyEmailLabel);
+					AppLibrary.syncAndClick(mailDriver, verifySignUpEmailLabel);
+					}
+					if(Label.equalsIgnoreCase("Invitation")) {
+					AppLibrary.syncAndClick(mailDriver, verifyInvitationEmailLabel);
+					}
+					
 
 				} catch (Exception e) {
 					flag = true;
@@ -206,7 +216,7 @@ public class MailinatorPage {
 		return text;
 	}
 
-	public MailinatorPage forgotPasswordVerification(String email) throws Exception {
+	public MailinatorPage openLink(String email,String Label) throws Exception {
 
 		AppLibrary ap = new AppLibrary();
 		ap.openNewTabByJavaScript(mailDriver);
@@ -226,8 +236,13 @@ public class MailinatorPage {
 					mailDriver
 							.get("https://www.mailinator.com/v3/index.jsp?zone=public&query=" + email + "#/#inboxpane");
 					AppLibrary.sleep(3000);
-
+					if(Label.equalsIgnoreCase("ForgotPassword")) {
 					AppLibrary.syncAndClick(mailDriver, verifyResetLabel);
+					}
+					
+					else if(Label.equalsIgnoreCase("Invitation")) {
+						AppLibrary.syncAndClick(mailDriver, verifyInvitationEmailLabel);
+						}
 
 				} catch (Exception e) {
 					flag = true;
