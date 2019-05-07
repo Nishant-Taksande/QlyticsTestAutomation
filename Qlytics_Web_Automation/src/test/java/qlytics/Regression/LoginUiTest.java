@@ -31,7 +31,7 @@ public class LoginUiTest extends TestBase {
 	public void LoginPageUi() throws Exception {
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
-		new LoginPage(driver).LoginPageUi();
+		new LoginPage(appLibrary).LoginPageUi();
 		System.out.println("Verified Successfully ");
 
 	}

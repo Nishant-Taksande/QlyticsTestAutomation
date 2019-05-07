@@ -6,7 +6,8 @@ import qlytics.Lib.AppLibrary;
 
 public class LoginPage {
 
-	WebDriver driver;
+	private AppLibrary appLibrary;
+	private WebDriver driver;
 
 	public static String qlyticsLoginLogo = "xpath://div[form[button[@class='ant-btn ant-btn-primary ant-btn-block']]]//img[contains(@class,'login-logo')]";
 	public static String LoginTOYourAccLabel = "xpath://small[text()='LOG IN TO YOUR ACCOUNT']";
@@ -28,13 +29,16 @@ public class LoginPage {
 	public static String emailValidation = "xpath://div[span[nz-input-group[input[@formcontrolname='email']]]]//div[text()=\"Replace\"]";
 	public static String passValidation = "xpath://div[span[nz-input-group[input[@placeholder='Password']]]]//div[text()=\"Replace\"]";
 	
-	
-	
-	public LoginPage(WebDriver driver) {
-		super();
-		this.driver = driver;
-	}
 
+
+	public LoginPage(AppLibrary appLibrary)
+	{
+		super();
+		this.appLibrary=appLibrary;
+		this.driver =appLibrary.getCurrentDriverInstance();
+	}
+	
+	
 	public LoginPage LoginPageUi() {
 
 		AppLibrary.sleep(1000);
@@ -51,16 +55,17 @@ public class LoginPage {
 		AppLibrary.verifyElement(driver, cognitiveLabel,true);
 		AppLibrary.verifyElement(driver, workDoneLabel,true);
 
-		return new LoginPage(driver);
+		return new LoginPage(appLibrary);
 
 	}
 
-	public void Login(String emailaddess, String pass) {
+	public LoginPage Login(String emailaddess, String pass) {
 		AppLibrary.sleep(1000);
 		AppLibrary.enterText(driver, EmailAddressInput, emailaddess);
 		AppLibrary.enterText(driver, LoginpasswordInput, pass);
 		AppLibrary.clickElement(driver, LoginButton);
 		AppLibrary.sleep(1000);
+		return new LoginPage(appLibrary);
 	}
 
 }

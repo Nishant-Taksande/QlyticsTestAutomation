@@ -48,18 +48,18 @@ public class ContactInfoUiTest extends TestBase {
 		appLibrary.launchAppDirectURL("");
 		AppLibrary.clickElement(driver, SignUpPage.signUpLink);
 
-		new SignUpPage(driver).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
+		new SignUpPage(appLibrary).registration(firstname, LastName, emailAddress + "@mailinator.com", Password, Password,
 				"8989700929", firstname + "Company", "Tester");
 
 		AppLibrary.findElement(driver, SignUpPage.VerificationMessageForSignUp);
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
-		new MailinatorPage(driver).getVerificationOnNewTab(emailAddress);
+		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress,"SignUp");
 
-		new LoginPage(driver).Login(emailAddress + "@mailinator.com", "Admin123!@#");
+		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", "Admin123!@#");
 		AppLibrary.findElement(driver, HeaderPage.DataMarButton);
-		new HeaderPage(driver).Logout();
+		new HeaderPage(appLibrary).Logout();
 
 	}
 	
@@ -67,9 +67,9 @@ public class ContactInfoUiTest extends TestBase {
 	public void ContactInfoPageUi() throws Exception {
 		driver = appLibrary.getDriverInstance();
 		appLibrary.launchApp("");
-		new LoginPage(driver).Login(emailAddress+ "@mailinator.com", "Admin123!@#");
-		new HeaderPage(driver).clickOnAccountSetting();
-		new ContactInfoPage(driver).contactInfoUi();
+		new LoginPage(appLibrary).Login(emailAddress+ "@mailinator.com", "Admin123!@#");
+		new HeaderPage(appLibrary).clickOnAccountSetting();
+		new ContactInfoPage(appLibrary).contactInfoUi();
 		System.out.println("Verified Successfully ");
 
 	}

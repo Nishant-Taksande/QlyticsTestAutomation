@@ -6,7 +6,10 @@ import qlytics.Lib.AppLibrary;
 
 public class ForgotPasswordPage {
 
-	WebDriver driver;
+	private AppLibrary appLibrary;
+	private WebDriver driver;
+	
+	
 	public static String qlyticsLForgotPasswordLogo = "xpath://div[form[contains(@class,'forgot-password')]]//img[contains(@class,'login-logo')]";
 	public static String recoverLabel = "xpath://small[text()='Recover your account password']";
 	public static String emailInput = "xpath://div[form[contains(@class,'forgot-password')]]//input[@formcontrolname='email']";
@@ -33,10 +36,12 @@ public class ForgotPasswordPage {
 	public static String remeberPassLabel = "xpath://div[h5[small[contains(text(),'reset your password')]]]//span[contains(text(),'Remembered your password?')]";
 	public static String resetPassloginLink = "xpath://div[h5[small[contains(text(),'reset your password')]]]//a[text()='Log in']";
 	
-	
-	public ForgotPasswordPage(WebDriver driver) {
+
+	public ForgotPasswordPage(AppLibrary appLibrary)
+	{
 		super();
-		this.driver = driver;
+		this.appLibrary=appLibrary;
+		this.driver =appLibrary.getCurrentDriverInstance();
 	}
 
 	public ForgotPasswordPage forgotPassUi() {
@@ -53,15 +58,17 @@ public class ForgotPasswordPage {
 		AppLibrary.verifyElement(driver, cognitiveLabel,true);
 		AppLibrary.verifyElement(driver, workDoneLabel,true);
 
-		return new ForgotPasswordPage(driver);
+		return new ForgotPasswordPage(appLibrary);
 
 	}
 
-	public void enterNewPassword(String Pass, String newPass) {
+	public ForgotPasswordPage enterNewPassword(String Pass, String newPass) {
 		AppLibrary.sleep(1000);
 		AppLibrary.enterText(driver, newpassInput, Pass);
 		AppLibrary.enterText(driver, cnfNewPassInput, newPass);
 		AppLibrary.clickElement(driver, resetPassButton2);
+		return new ForgotPasswordPage(appLibrary);
+		
 
 	}
 	
@@ -82,7 +89,7 @@ public class ForgotPasswordPage {
 		AppLibrary.verifyElement(driver, workDoneLabel,true);
 		
 		
-		return new ForgotPasswordPage(driver);
+		return new ForgotPasswordPage(appLibrary);
 	}
 	
 	
