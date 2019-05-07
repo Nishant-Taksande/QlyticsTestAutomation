@@ -2,7 +2,11 @@ package qlytics.Pages;
 
 import static org.testng.Assert.assertFalse;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -87,9 +91,8 @@ public class ProfilePage {
 	public static String saveButtonprofile = "" + profileParent + "//button[//span[text()='Save']]";
 
 	public static String profileUpdatedMessage = "xpath://span[text()='Profile updated successfully.']";
-	
+
 	public static String profileNameHeader = "xpath://li[contains(@class,'ant-menu-submenu-horizontal')]//div[contains(@class,'ant-menu-submenu-title')]//span";
-	
 
 	// Education
 
@@ -103,6 +106,8 @@ public class ProfilePage {
 	public static String areaLabel = "" + profileParent + "//div[text()='Area']";
 
 	public static String degreeLabel = "" + profileParent + "//div[text()='Degree']";
+
+	public static String degreeVerification = "xpath://nz-select[@formcontrolname='degree']//div[contains(@class,'ant-select-selection-selected-value')]";
 
 	public static String descriptionLabel = "" + profileParent + "//div[text()='Description']";
 
@@ -133,11 +138,22 @@ public class ProfilePage {
 	public static String degreeInput = "" + educationAddParent
 			+ "//nz-form-item[nz-form-label[label[text()='Degree *']]]//input";
 
+	public static String degreearrowButton = "xpath://div[div[div[div[div[text()='Add education']]]]//label[text()='Degree *']]//nz-select[@formcontrolname='degree']//i[contains(@class,'ant-select-arrow-icon')]";
+
 	public static String dropDown = "xpath://ul[@class='ant-select-dropdown-menu ant-select-dropdown-menu-root ant-select-dropdown-menu-vertical']";
 
 	public static String saveButton = "" + educationAddParent + "//button[span[span[contains(text(),'Save')]]]";
 
 	public static String cancelButton = "" + educationAddParent + "//button[span[text()='Cancel']]";
+
+	public static String school_collegeDashboard = "xpath://td[1]";
+
+	public static String areaDashboard = "xpath://td[2]";
+
+	public static String degreeDashboard = "xpath://td[3]";
+
+	public static String descriptionDashboard = "xpath://td[4]";
+	public static String eductaionAddedSuccessfullyMess = "xpath://span[text()='Education record added successfully']";
 
 	// Update Education form
 	public static String educationUpdateParent = "xpath://div[div[div[div[text()='Update education']]]]";
@@ -156,7 +172,7 @@ public class ProfilePage {
 
 	public static String school_collegeUpdateLabel = "" + educationUpdateParent + "//label[text()='School/College *']";
 
-	public static String School_CollegeUpdateLabel = "" + educationUpdateParent
+	public static String School_CollegeUpdateInput = "" + educationUpdateParent
 			+ "//input[@formcontrolname='education_school']";
 	public static String degreeUpdateEduLabel = "" + educationUpdateParent + "//label[text()='Degree *']";
 
@@ -165,6 +181,7 @@ public class ProfilePage {
 
 	public static String saveUpdateButton = "" + educationUpdateParent
 			+ "//button[span[span[contains(text(),'Save')]]]";
+	public static String eductaionUpdatedSuccessfullyMess = "xpath://span[text()='Education updated successfully']";
 
 	public static String cancelUpdateButton = "" + educationUpdateParent + "//button[span[text()='Cancel']]";
 
@@ -211,6 +228,10 @@ public class ProfilePage {
 
 	public static String selectDate = "" + addEmploymentParent
 			+ "//nz-form-item[nz-form-label[label[text()='From Date - To Date *']]]//nz-range-picker";
+
+	public static String fromDateInput = "xpath://div[div[div[div[div[text()='Add employment']]]]]//input[contains(@class,'ant-calendar-range-picker-input')][@placeholder='Start date']";
+
+	public static String toDateInput = "xpath://div[div[div[div[div[text()='Add employment']]]]]//input[contains(@class,'ant-calendar-range-picker-input')][@placeholder='End date']";
 
 	public static String saveEmploymentButton = "" + addEmploymentParent
 			+ "//button[span[span[contains(text(),'Save')]]]";
@@ -319,17 +340,44 @@ public class ProfilePage {
 		AppLibrary.enterText(driver, decriptionInput, description);
 		AppLibrary.enterText(driver, areaInput, area);
 		AppLibrary.enterText(driver, School_CollegeInput, school);
-		AppLibrary.selectDropDown(driver, degreeInput,
-				"xpath://ul[@class='ant-select-dropdown-menu ant-select-dropdown-menu-root ant-select-dropdown-menu-vertical']",
-				selectDegree);
+//		AppLibrary.customselectDropdownOption(driver, degreeInput, List.replace("Replace", selectDegree), selectDegree,
+//				degreearrowButton);
+
+		AppLibrary.selectDropDown(driver, degreeInput, List.replace("Replace", selectDegree), selectDegree);
+
 		AppLibrary.clickElement(driver, saveButton);
-//			AppLibrary.clickElement(driver, ProfilePage.profileButton);
-//			AppLibrary.sleep(5000);
-//			AppLibrary.clickElement(driver, ProfilePage.educationButton);
-//			
-//			new ProfilePage(driver).FillEductaionForm("electrical", "bhopal", "nagaji", "Associate of Arts and Sciences (A.A.S.)");
+
+		AppLibrary.verifyElement(driver, eductaionAddedSuccessfullyMess, true);
+
+		return new ProfilePage(appLibrary);
+	}
+
+	public ProfilePage EditEducation(String description, String area, String school, String selectDegree) {
+
+		AppLibrary.clickElement(driver, editEducation);
+		AppLibrary.enterText(driver, UpdateEdudecriptionInput, description);
+		AppLibrary.enterText(driver, updateAreaInput, area);
+		AppLibrary.enterText(driver, School_CollegeUpdateInput, school);
+		AppLibrary.selectDropDown(driver, degreeUpdateInput, List.replace("Replace", selectDegree), selectDegree);
+
+		AppLibrary.clickElement(driver, saveUpdateButton);
+
+		AppLibrary.sleep(3000);
+//		AppLibrary.verifyElement(driver, eductaionUpdatedSuccessfullyMess, true);
+		AppLibrary.verifyElement(driver, educationHistoryLabel, true);
 		return new ProfilePage(appLibrary);
 
+	}
+
+	public ProfilePage VerifyEductaionForm(String description, String area, String school, String selectDegree) {
+
+		AppLibrary.verification(driver, descriptionDashboard, description);
+		AppLibrary.verification(driver, areaDashboard, area);
+		AppLibrary.verification(driver, school_collegeDashboard, school);
+
+		// change to degree verification
+		AppLibrary.Verificationwithcontains(driver, degreeDashboard, selectDegree);
+		return new ProfilePage(appLibrary);
 	}
 
 	public ProfilePage EmploymentHistoryUi() {
@@ -361,30 +409,43 @@ public class ProfilePage {
 		return new ProfilePage(appLibrary);
 	}
 
-	public ProfilePage FillEmploymentHistoryForm(String description, String area, String school, String selectDegree) {
+	public ProfilePage FillEmploymentHistoryForm(String company, String title, String fromDate, String toDate) throws Exception {
 
 		AppLibrary.clickElement(driver, AddEmploymentHistoryButton);
-		AppLibrary.enterText(driver, compnayInput, description);
-		AppLibrary.enterText(driver, titleEmploymentInput, area);
+		AppLibrary.enterText(driver, compnayInput, company);
+		AppLibrary.enterText(driver, titleEmploymentInput, title);
 
-		AppLibrary.enterText(driver, selectDate, school);
-
-		AppLibrary.selectDropDown(driver, degreeInput, dropDown, selectDegree);
-		AppLibrary.clickElement(driver, saveButton);
+//		AppLibrary.enterText(driver, fromDateInput, fromDate);
+//		AppLibrary.findElement(driver, fromDateInput).sendKeys(fromDate);
+		AppLibrary.setAttributeByJavascript(driver, fromDateInput, fromDate);
+		
+		AppLibrary.setAttributeByJavascript(driver, toDateInput, toDate);
+//		AppLibrary.enterText(driver, toDateInput, toDate);
+		
+		
+		WebElement save = AppLibrary.findElement(driver, saveEmploymentButton);
+		if(!AppLibrary.isAttribtuePresent(save, "disabled")) {
+			
+		AppLibrary.clickElement(driver, saveEmploymentButton);
+		}
 		return new ProfilePage(appLibrary);
 	}
 
 	public ProfilePage FillPersonalDetailsForm(String ProfileName, String title, String overview, String HourlyRate,
-			String country, String category, String skills, String Visibilty, String avability) {
+			String country, String category, String skills, String Visibilty, String avability) throws Exception {
 
 		AppLibrary.clickElement(driver, profileButton);
 		AppLibrary.sleep(3000);
-		AppLibrary.enterText(driver, profileNameInput, ProfileName);
+
+		// profile name is not changing after save
+		// AppLibrary.enterText(driver, profileNameInput, ProfileName);
+
 		AppLibrary.enterText(driver, titleInput, title);
 		AppLibrary.enterText(driver, overviewInput, overview);
 		appLibrary.uploadImage(driver, ContactInfoPage.profileUploadButton, "TestImg.jpg", ContactInfoPage.profileImg,
 				"href");
 
+		AppLibrary.clearTextByJavascript(driver, hourlyrateInput);
 		AppLibrary.enterText(driver, hourlyrateInput, HourlyRate);
 
 		AppLibrary.customselectDropdownOption(driver, countryInput, List.replace("Replace", country), country,

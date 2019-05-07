@@ -1,13 +1,5 @@
 package qlytics.Lib;
 
-import java.awt.AWTException;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,8 +17,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -1848,8 +1838,9 @@ public class AppLibrary {
 
 	}
 
-	public static void customselectDropdownOption(WebDriver driver, String parent, String child, String text,String clickElememnt) {
-		AppLibrary.clickElement(driver,clickElememnt );
+	public static void customselectDropdownOption(WebDriver driver, String parent, String child, String text,
+			String clickElememnt) {
+		AppLibrary.clickElement(driver, clickElememnt);
 		AppLibrary.findElement(driver, parent).sendKeys(text);
 
 		AppLibrary.sleep(1000);
@@ -1858,13 +1849,129 @@ public class AppLibrary {
 
 		AppLibrary.findElement(driver, parent).sendKeys(Keys.ESCAPE);
 	}
-	
+
 	public static void verificationwithtwoValue(WebDriver driver, String actualValue, String expectedValue) {
 
 		Assert.assertEquals(actualValue.replace(",", ""), expectedValue,
 				"values didnot match for " + actualValue + "Expected =" + expectedValue + "  Actual =" + actualValue);
+
 	}
-	
-	
-	
+
+	public static WebElement clearTextByJavascript(WebDriver driver, String objectLocator) throws Exception {
+		String[] parts = objectLocator.split(":");
+		if (parts.length < 2) {
+			throw new RuntimeException("No type is specified in object locator: " + objectLocator);
+		}
+		String type = parts[0];
+		String object = parts[1];
+
+		WebElement element;
+		try {
+			if (type.equals("id")) {
+				element = driver.findElement(By.id(object));
+			} else if (type.equals("name")) {
+				element = driver.findElement(By.name(object));
+			} else if (type.equals("class")) {
+				element = driver.findElement(By.className(object));
+			} else if (type.equals("link")) {
+				;
+				element = driver.findElement(By.linkText(object));
+			} else if (type.equals("partiallink")) {
+				;
+				element = driver.findElement(By.partialLinkText(object));
+			} else if (type.equals("css")) {
+				element = driver.findElement(By.cssSelector(object));
+			} else if (type.equals("xpath")) {
+				element = driver.findElement(By.xpath(object));
+			} else {
+				throw new RuntimeException("Please provide correct element locating strategy");
+			}
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].value ='';", element);
+		} catch (Exception e) {
+			System.out.println(objectLocator + ": exception occurred: " + e.getClass().toString());
+			throw e;
+		}
+		return element;
+	}
+
+	public static void Verificationwithcontains(WebDriver driver, String locator, String expectedValue) {
+
+		String actualValue = AppLibrary.findElement(driver, locator).getText();
+
+		boolean a = actualValue.contains(expectedValue);
+
+		Assert.assertTrue(a, "Verification failed");
+
+	}
+
+	public static WebElement setAttributeByJavascript(WebDriver driver, String objectLocator, String value)
+			throws Exception {
+		String[] parts = objectLocator.split(":");
+		if (parts.length < 2) {
+			throw new RuntimeException("No type is specified in object locator: " + objectLocator);
+		}
+		String type = parts[0];
+		String object = parts[1];
+
+		WebElement element;
+		try {
+			if (type.equals("id")) {
+				element = driver.findElement(By.id(object));
+			} else if (type.equals("name")) {
+				element = driver.findElement(By.name(object));
+			} else if (type.equals("class")) {
+				element = driver.findElement(By.className(object));
+			} else if (type.equals("link")) {
+				;
+				element = driver.findElement(By.linkText(object));
+			} else if (type.equals("partiallink")) {
+				;
+				element = driver.findElement(By.partialLinkText(object));
+			} else if (type.equals("css")) {
+				element = driver.findElement(By.cssSelector(object));
+			} else if (type.equals("xpath")) {
+				element = driver.findElement(By.xpath(object));
+			} else {
+				throw new RuntimeException("Please provide correct element locating strategy");
+			}
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
+					element, "value", value);
+		} catch (Exception e) {
+			System.out.println(objectLocator + ": exception occurred: " + e.getClass().toString());
+			throw e;
+		}
+		return element;
+	}
+
+	public static boolean isAttribtuePresent(WebElement element, String attribute) {
+		Boolean result = false;
+		try {
+			String value = element.getAttribute(attribute);
+			if (value != null) {
+				result = true;
+			}
+		} catch (Exception e) {
+		}
+
+		return result;
+	}
+
+	public void verifyListGridRow(String locator, String uniqueColumnValue, String tableRow) {
+
+		String rowData = AppLibrary.findElement(driver, locator + "//tr[td[text()='" + uniqueColumnValue + "']]")
+				.getText();
+		System.out.println("Actual  : " + rowData);
+		System.out.println("Expected: " + tableRow);
+		Assert.assertTrue(rowData.contains(tableRow), "Expected: " + tableRow + "  Actual: " + rowData);
+	}
+
+	public void clickListGridEdit(String uniqueColumnValue) {
+		AppLibrary.sleep(5000);
+		AppLibrary.findElement(driver, "//tr[td[text()='" + uniqueColumnValue + "']]//a[contains(text(),'Edit')]")
+				.click();
+		AppLibrary.sleep(5000);
+	}
+
 }

@@ -149,4 +149,9 @@ public class SignUpPage {
 		AppLibrary.clickElement(driver, registerButton);
 		return new SignUpPage(appLibrary);
 	}
+	
+	
+	
+	
+	
 }

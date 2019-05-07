@@ -55,7 +55,7 @@ public class ContactInfoUiTest extends TestBase {
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
-		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress);
+		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress,"SignUp");
 
 		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", "Admin123!@#");
 		AppLibrary.findElement(driver, HeaderPage.DataMarButton);

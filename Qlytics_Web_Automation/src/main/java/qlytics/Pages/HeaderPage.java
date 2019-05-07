@@ -47,7 +47,7 @@ public class HeaderPage {
 
 	public HeaderPage clickOnAccountSetting() {
 
-		AppLibrary.sleep(1000);
+		AppLibrary.sleep(2000);
 		AppLibrary.mouseHover(driver, profileButton);
 //		AppLibrary.clickElement(driver, profileButton);
 		AppLibrary.clickElement(driver, accountSettingButton);

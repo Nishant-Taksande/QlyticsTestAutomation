@@ -56,7 +56,7 @@ public class ForgotPasswordFunctionalityTest extends TestBase {
 
 		AppLibrary.clickElement(driver, SignUpPage.loginLink);
 
-		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress);
+		new MailinatorPage(appLibrary).getVerificationOnNewTab(emailAddress,"SignUp");
 
 		new LoginPage(appLibrary).Login(emailAddress + "@mailinator.com", "Admin123!@#");
 		AppLibrary.findElement(driver, HeaderPage.DataMarButton);
@@ -73,7 +73,7 @@ public class ForgotPasswordFunctionalityTest extends TestBase {
 		AppLibrary.findElement(driver, ForgotPasswordPage.emailInput).sendKeys(emailAddress + "@mailinator.com");
 		AppLibrary.clickElement(driver, ForgotPasswordPage.resetPassButton);
 		AppLibrary.findElement(driver, ForgotPasswordPage.verificationMessage);
-		new MailinatorPage(appLibrary).forgotPasswordVerification(emailAddress);
+		new MailinatorPage(appLibrary).openLink(emailAddress,"ForgotPassword");
 		AppLibrary.findElement(driver, ForgotPasswordPage.ResetPasswordLabel);
 
 		new ForgotPasswordPage(appLibrary).enterNewPassword("Pass123!@#", "Pass123!@#");
